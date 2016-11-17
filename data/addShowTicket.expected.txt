@@ -1,0 +1,5 @@
+1 20:01, TableDisplay, td1, viewTicket, tuples, 3, 
+    ID, Description, Count, 
+    D1,  Soft Drink,     1, 
+    M1,        Fish,     2, 
+    M2,   Veg Chili,     1;

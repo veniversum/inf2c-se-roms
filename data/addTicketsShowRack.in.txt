@@ -1,0 +1,16 @@
+1 12:00, OfficeKVM, okvm, addToMenu, M1, Fish, 7.95;
+1 12:00, OfficeKVM, okvm, addToMenu, M2, Veg Chili, 6.70;
+1 12:00, OfficeKVM, okvm, addToMenu, D1, Soft Drink, 1.50;
+1 12:00, OfficeKVM, okvm, addToMenu, D2, Wine, 3.25;
+1 20:00, TableDisplay, td1, startOrder;
+1 20:01, TableDisplay, td1, addMenuItem, M1;
+1 20:01, TableDisplay, td1, addMenuItem, M2;
+1 20:01, TableDisplay, td1, addMenuItem, M1;
+1 20:01, TableDisplay, td1, addMenuItem, D1;
+1 20:02, TableDisplay, td1, submitOrder;
+1 20:10, TableDisplay, td2, startOrder;
+1 20:11, TableDisplay, td2, addMenuItem, M1;
+1 20:11, TableDisplay, td2, addMenuItem, M1;
+1 20:11, TableDisplay, td2, addMenuItem, D2;
+1 20:12, TableDisplay, td2, submitOrder;
+1 20:15, Clock, c, tick;

@@ -1,0 +1,7 @@
+1 20:15, KitchenDisplay, kd, viewRack, tuples, 6, 
+    Time, Ticket#, MenuID, Description, #Ordered, #Ready, 
+      13,       1,     D1,  Soft Drink,        1,      0, 
+      13,       1,     M1,        Fish,        2,      0, 
+      13,       1,     M2,   Veg Chili,        1,      0, 
+       3,       2,     D2,        Wine,        1,      0, 
+       3,       2,     M1,        Fish,        2,      0;

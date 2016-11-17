@@ -1,0 +1,6 @@
+1 19:15, OfficeKVM, okvm, viewMenu, tuples, 3, 
+    ID, Description, Price, 
+    D1,  Soft Drink,  1.50, 
+    D2,        Wine,  3.25, 
+    M1,        Fish,  7.95, 
+    M2,   Veg Chili,  6.70;
