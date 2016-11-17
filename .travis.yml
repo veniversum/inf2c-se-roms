@@ -1,1 +1,4 @@
 language: java
+env:
+  global:
+    - CODACY_PROJECT_TOKEN=e4dd4115dfd84ac29dec5d7313efb8c5

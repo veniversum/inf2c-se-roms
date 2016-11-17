@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'jacoco'
 project.tasks.remove(jar)
 
 sourceSets {
@@ -16,10 +17,96 @@ sourceSets {
     }
 }
 
+configurations {
+    codacy
+}
+
 repositories {
     jcenter()
 }
 
 dependencies {
     testCompile 'junit:junit:4.12'
+    codacy group: 'com.codacy', name: 'codacy-coverage-reporter', version: '1.0.10'
+}
+
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+jacocoTestReport {
+    executionData = fileTree(dir: "${buildDir}", include: '**/jacoco/*.exec')
+
+    reports {
+        xml.enabled true
+        xml.destination "${buildDir}/test-results/jacoco/${archivesBaseName}.xml"
+        csv.enabled false
+        html.enabled true
+        html.destination "${buildDir}/test-results/jacoco/html"
+    }
+
+    doLast {
+        def report = reports.xml.destination
+        logger.lifecycle("Checking coverage results: ${report}")
+
+        def parser = new XmlParser()
+        parser.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false)
+        def results = parser.parse(report)
+
+        def percentage = {
+            if (it == null) {
+                return 100
+            }
+            def covered = it.'@covered' as Double
+            def missed = it.'@missed' as Double
+            ((covered / (covered + missed)) * 100).round(2)
+        }
+
+        def counters = results.counter
+        def metrics = [:]
+        metrics << [
+                'instruction': percentage(counters.find { it.'@type'.equals('INSTRUCTION') }),
+                'branch'     : percentage(counters.find { it.'@type'.equals('BRANCH') }),
+                'line'       : percentage(counters.find { it.'@type'.equals('LINE') }),
+                'complexity' : percentage(counters.find { it.'@type'.equals('COMPLEXITY') }),
+                'method'     : percentage(counters.find { it.'@type'.equals('METHOD') }),
+                'class'      : percentage(counters.find { it.'@type'.equals('CLASS') })
+        ]
+    }
+}
+
+
+
+check.dependsOn jacocoTestReport
+
+task uploadCoverageToCodacy(type: JavaExec, dependsOn: jacocoTestReport) {
+    main = "com.codacy.CodacyCoverageReporter"
+    classpath = configurations.codacy
+    args = [
+            "-l",
+            "Java",
+            "-r",
+            "${buildDir}/test-results/jacoco/${archivesBaseName}.xml"
+    ]
+}
+
+task(codacyDepsize) << {
+    def size = 0;
+    configurations.codacy.collect { it.length() / (1024 * 1024) }.each { size += it }
+    println "Total dependencies size: ${Math.round(size * 100) / 100} Mb"
+
+    configurations
+            .codacy
+            .sort { -it.length() }
+            .each { println "${it.name} : ${Math.round(it.length() / (1024) * 100) / 100} kb" }
+}
+
+task(codacyLocs) << {
+    configurations.codacy.each {
+        String jarName = it
+        println jarName
+    }
 }
