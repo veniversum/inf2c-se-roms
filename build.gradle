@@ -1,4 +1,24 @@
 apply plugin: 'java'
+project.tasks.remove(jar)
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["src/"]
+            exclude "**/*Test*.java"
+        }
+    }
+    test {
+        java {
+            srcDirs = ["src/"]
+            include "**/*Test*.java"
+        }
+    }
+}
+
+repositories {
+    jcenter()
+}
 
 dependencies {
     testCompile 'junit:junit:4.12'
