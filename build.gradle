@@ -23,6 +23,7 @@ configurations {
 
 repositories {
     jcenter()
+    maven { url "http://dl.bintray.com/typesafe/maven-releases" }
 }
 
 dependencies {
@@ -78,10 +79,6 @@ jacocoTestReport {
     }
 }
 
-
-
-check.dependsOn jacocoTestReport
-
 task uploadCoverageToCodacy(type: JavaExec, dependsOn: jacocoTestReport) {
     main = "com.codacy.CodacyCoverageReporter"
     classpath = configurations.codacy
@@ -92,6 +89,8 @@ task uploadCoverageToCodacy(type: JavaExec, dependsOn: jacocoTestReport) {
             "${buildDir}/test-results/jacoco/${archivesBaseName}.xml"
     ]
 }
+
+check.dependsOn jacocoTestReport
 
 task(codacyDepsize) << {
     def size = 0;
