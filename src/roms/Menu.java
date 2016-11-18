@@ -3,28 +3,29 @@
  */
 package roms;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * @author pbj
  */
 public class Menu {
-    private TreeMap<String, MenuItem> menuItemTreeMap;
+    private Map<String, MenuItem> menuItemMap;
 
     public Menu() {
-        menuItemTreeMap = new TreeMap<>();
+        menuItemMap = new TreeMap<>();
     }
 
     public void addMenuItem(String menuID, String description, Money price) {
-        menuItemTreeMap.put(menuID, new MenuItem(description, price));
+        menuItemMap.put(menuID, new MenuItem(description, price));
+    }
+
+    public MenuItem getMenuItem(String menuID) {
+        return menuItemMap.get(menuID);
     }
 
     public void removeMenuItem(String id) {
-        assert menuItemTreeMap.containsKey(id) : "Trying to remove item menu not already in menu";
+        assert menuItemMap.containsKey(id) : "Trying to remove item menu not already in menu";
         /*
         THIS IS BAD BAD BAD BAD PRACTICE! Should NOT be used in ANY kind of production systems.
         The above assert is only included because Section 3.4 explicitly mentions so. We will thus
@@ -53,7 +54,7 @@ public class Menu {
         exceptions are handled by multiple parts of the program, each rethrowing a new exception to the next
         handler. In fact, in this case it might be best to at most just log the exception.
          */
-        menuItemTreeMap.remove(id);
+        menuItemMap.remove(id);
     }
 
     /**
@@ -78,7 +79,7 @@ public class Menu {
      * @return
      */
     public List<String> toStrings() {
-        return menuItemTreeMap.entrySet()
+        return menuItemMap.entrySet()
                 .stream()
                 .map(e -> Arrays.asList(e.getKey(), e.getValue().getDescription(), e.getValue().getPrice().toString()))
                 .flatMap(Collection::stream).collect(Collectors.toList());

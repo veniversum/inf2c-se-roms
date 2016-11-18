@@ -4,6 +4,9 @@ public class MenuItem {
     private String description;
     private Money price;
 
+    protected MenuItem() {
+    }
+
     public MenuItem(String description, Money price) {
         this.description = description;
         this.price = price;

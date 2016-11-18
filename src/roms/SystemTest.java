@@ -3,10 +3,10 @@
  */
 package roms;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.Test;
 
 /**
  * @author pbj
@@ -185,9 +185,13 @@ public class SystemTest extends TestBasis {
         // Create systemCore object and links between it and IO devices.
         
         SystemCore systemCore = new SystemCore();
-       
-        button.setSystemCore(systemCore);
+        TableTicketCoordinator tableTicketCoordinator = new TableTicketCoordinator();
+        systemCore.setTableTicketCoordinator(tableTicketCoordinator);
+        tableDisplays.stream().forEach(td -> td.setSystemCore(systemCore));
+        tableTicketCoordinator.setSystemCore(systemCore);
         systemCore.setPassLight(light);
+
+        button.setSystemCore(systemCore);
         officeKVM.setSystemCore(systemCore);
 
         Menu menu = new Menu();
