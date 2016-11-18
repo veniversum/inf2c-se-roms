@@ -11,7 +11,7 @@ sourceSets {
     }
     test {
         java {
-            srcDirs = ["src/"]
+            srcDirs = ["src/", "src/test/"]
             include "**/*Test*.java"
         }
     }
