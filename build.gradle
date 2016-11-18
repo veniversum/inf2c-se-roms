@@ -27,7 +27,7 @@ repositories {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
+    compile 'junit:junit:4.12'
     codacy group: 'com.codacy', name: 'codacy-coverage-reporter', version: '1.0.10'
 }
 

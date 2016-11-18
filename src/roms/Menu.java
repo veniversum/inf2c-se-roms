@@ -6,12 +6,21 @@ package roms;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * @author pbj
  *
  */
 public class Menu {
+    TreeMap<String, MenuItem> menuItemTreeMap;
+
+    public Menu() {
+        menuItemTreeMap = new TreeMap<>();
+    }
+
+
+
     /**
      * Format menu as list of strings, with, per menu item, 3 strings for 
      * respectively:

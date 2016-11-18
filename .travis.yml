@@ -6,3 +6,5 @@ script:
 - ./gradlew assemble
 - ./gradlew check
 - ./gradlew uploadCoverageToCodacy
+notifications:
+  email: false
