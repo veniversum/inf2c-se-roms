@@ -1,10 +1,10 @@
 package roms;
 
 public class MenuItem {
-    String description;
-    String price;
+    private String description;
+    private Money price;
 
-    public MenuItem(String description, String price) {
+    public MenuItem(String description, Money price) {
         this.description = description;
         this.price = price;
     }
@@ -18,11 +18,11 @@ public class MenuItem {
         this.description = description;
     }
 
-    public String getPrice() {
+    public Money getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Money price) {
         this.price = price;
     }
 }

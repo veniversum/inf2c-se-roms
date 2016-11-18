@@ -22,6 +22,12 @@ public class SystemCore {
     public void cancelReadyUp() {
         passLight.switchOff();
     }
-    
- 
+
+    public MenuProvider getMenuProvider() {
+        return menuProvider;
+    }
+
+    public void setMenuProvider(MenuProvider menuProvider) {
+        this.menuProvider = menuProvider;
+    }
 }

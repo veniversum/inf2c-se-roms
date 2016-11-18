@@ -1,22 +1,26 @@
 /**
- * 
+ *
  */
 package roms;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * @author pbj
- *
  */
 public class Menu {
     private TreeMap<String, MenuItem> menuItemTreeMap;
 
     public Menu() {
         menuItemTreeMap = new TreeMap<>();
+    }
+
+    public void addMenuItem(String menuID, String description, Money price) {
+        menuItemTreeMap.put(menuID, new MenuItem(description, price));
     }
 
     public void removeMenuItem(String id) {
@@ -53,38 +57,31 @@ public class Menu {
     }
 
     /**
-     * Format menu as list of strings, with, per menu item, 3 strings for 
+     * Format menu as list of strings, with, per menu item, 3 strings for
      * respectively:
      * - MenuID
      * - Description
      * - Price
-     * 
+     * <p>
      * Items are expected to be ordered by MenuID.
-     * 
+     * <p>
      * An example list is:
-     * 
+     * <p>
      * "D1", "Wine",        "2.50",
      * "D2", "Soft drink",  "1.50",
      * "M1", "Fish",        "7.95",
      * "M2", "Veg chili",   "6.70"
-     * 
+     * <p>
      * These lists of strings are used by TableDisplay and TicketPrinter
      * to produce formatted ticket output messages.
-     * 
+     *
      * @return
      */
     public List<String> toStrings() {
- 
-        // Dummy implementation. 
-        String[] stringArray = 
-            {"D1", "Wine",        "2.50",
-             "D2", "Soft drink",  "1.50",
-             "M1", "Fish",        "7.95",
-             "M2", "Veg chili",   "6.70"
-            };
-        List<String> ss = new ArrayList<String>();
-        ss.addAll(Arrays.asList(stringArray));
-        return ss;
+        return menuItemTreeMap.entrySet()
+                .stream()
+                .map(e -> Arrays.asList(e.getKey(), e.getValue().getDescription(), e.getValue().getPrice().toString()))
+                .flatMap(Collection::stream).collect(Collectors.toList());
     }
-    
+
 }

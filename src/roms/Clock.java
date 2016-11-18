@@ -112,7 +112,7 @@ public class Clock extends AbstractInputDevice {
             tick();
             
         } else {
-            super.receiveEvent(e);;
+            super.receiveEvent(e);
         }
     }
     
@@ -125,7 +125,7 @@ public class Clock extends AbstractInputDevice {
      * objects need to send messages to. 
      * 
      * Add public setters for these fields.
-     * 
+     *
      * Complete the methods for handling trigger input events.
      * 
      */

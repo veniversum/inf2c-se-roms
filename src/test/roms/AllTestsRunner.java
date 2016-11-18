@@ -9,6 +9,7 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class AllTestsRunner {
     private final PrintStream defaultOut = System.out;
@@ -30,41 +31,42 @@ public class AllTestsRunner {
         System.setErr(defaultErr);
     }
 
-    public void checkAsserts() {
+    public boolean checkAsserts() {
         String output = outCapture.toString();
         assertTrue(output.contains("ACTUAL EVENTS AS EXPECTED"));
         assertFalse(output.contains("ACTUAL EVENTS NOT AS EXPECTED"));
         assertFalse(output.contains("ERROR EXCEPTION THROWN"));
         assertFalse(output.contains("EXCEPTION THROWN"));
+        return true;
     }
 
     @Test
     public void addShowMenuTest(){
         AllTests.runTestFromFiles("data/addShowMenu");
-        checkAsserts();
+        assertTrue(checkAsserts());
     }
 
     @Test
     public void addShowTicketTest() {
         AllTests.runTestFromFiles("data/addShowTicket");
-        checkAsserts();
+        assertTrue(checkAsserts());
     }
 
     @Test
     public void addTicketPayBillTest() {
         AllTests.runTestFromFiles("data/addTicketPayBill");
-        checkAsserts();
+        assertTrue(checkAsserts());
     }
 
     @Test
     public void addShowTicketsShowRackTest() {
         AllTests.runTestFromFiles("data/addTicketsShowRack");
-        checkAsserts();
+        assertTrue(checkAsserts());
     }
 
     @Test
     public void cancelReadyUpLightTest() {
         AllTests.runTestFromFiles("data/cancelReadyUpLight");
-        checkAsserts();
+        assertTrue(checkAsserts());
     }
 }

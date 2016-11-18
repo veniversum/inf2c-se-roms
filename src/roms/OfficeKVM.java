@@ -79,14 +79,20 @@ public class OfficeKVM extends AbstractIODevice {
      * SUPPORT FOR TRIGGER INPUT MESSAGES
      */
 
+    private SystemCore systemCore;
+
+    public void setSystemCore(SystemCore s) {
+        systemCore = s;
+    }
+
     public void showMenu() {
         logger.fine(getInstanceName());
-        // TO BE COMPLETED
+        displayMenu(systemCore.getMenuProvider().getDefaultMenu());
     }
  
     public void addToMenu(String menuID, String description, Money price) {
         logger.fine(getInstanceName());
-        // TO BE COMPLETED
+        systemCore.getMenuProvider().getDefaultMenu().addMenuItem(menuID, description, price);
     }
 
     public void removeFromMenu(String menuID) {

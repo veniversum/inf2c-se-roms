@@ -328,8 +328,7 @@ public abstract class TestBasis {
            e.printStackTrace(System.out); // To stdout
            e.printStackTrace(); // To stderr
        }
-       return;
-    }        
+    }
     
     /**
      * Run test with provided events.

@@ -188,7 +188,13 @@ public class SystemTest extends TestBasis {
        
         button.setSystemCore(systemCore);
         systemCore.setPassLight(light);
-               
+        officeKVM.setSystemCore(systemCore);
+
+        Menu menu = new Menu();
+        MenuProvider menuProvider = new MenuProvider(menu);
+        systemCore.setMenuProvider(menuProvider);
+
+
         
         // TABLE-RELATED
         for (int i = 1; i <= NUM_TABLES; i++) {
