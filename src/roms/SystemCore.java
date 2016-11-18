@@ -10,6 +10,7 @@ package roms;
  * 
  */
 public class SystemCore {
+    private MenuProvider menuProvider;
  
     private PassLight passLight;
     

@@ -20,8 +20,11 @@ public class SystemTest extends TestBasis {
      ***********************************************************************
      * Add all your JUnit tests for your system below.
      */
-    
-     
+
+    /*
+        REFER TO /src/test/ DIRECTORY FOR MORE TESTS
+     */
+
     @Test 
     public void cancelReadyUpLight() {
         logger.info(makeBanner("cancelReadyUpLight"));
@@ -31,6 +34,14 @@ public class SystemTest extends TestBasis {
         runAndCheck();
     }
 
+    /**
+     * Tests AssertionError thrown when assert fails, ref Section 3.4
+     */
+    @Test(expected = AssertionError.class)
+    public void testAssertionError(){
+        Menu menu = new Menu();
+        menu.removeMenuItem("invalid");
+    }
  
    /*
     * Put all your JUnit system-level tests above.
