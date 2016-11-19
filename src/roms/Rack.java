@@ -1,6 +1,3 @@
-/**
- * 
- */
 package roms;
 
 import java.util.*;
@@ -13,7 +10,7 @@ import java.util.stream.Collectors;
  *
  */
 public class Rack {
-    private Queue<Ticket> ticketQueue = new LinkedList<>();
+    private Map<Integer, Ticket> ticketQueue = new TreeMap<>();
     private int ticketNumberCounter = 0;
 
     public int getNextTicketNumber() {
@@ -21,7 +18,11 @@ public class Rack {
     }
 
     public void submitOrder(Ticket ticket) {
-        ticketQueue.offer(ticket);
+        ticketQueue.put(ticket.getTicketNumber(), ticket);
+    }
+
+    public Ticket getTicketByNumber(int number) {
+        return ticketQueue.get(number);
     }
        
     /**
@@ -63,7 +64,7 @@ public class Rack {
      * @return
      */
     public List<String> toStrings() {
-        return ticketQueue.stream().map(this::formatTicket).flatMap(Collection::stream).collect(Collectors.toList());
+        return ticketQueue.values().stream().map(this::formatTicket).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     private List<String> formatTicket(Ticket ticket) {

@@ -191,8 +191,9 @@ public class SystemTest extends TestBasis {
         Rack rack = new Rack();
         systemCore.setRack(rack);
         // ## Initialize kitchen controller
-        KitchenController kitchenController = new KitchenController();
+        KitchenController kitchenController = new KitchenController(systemCore);
         kitchenController.addKitchenDisplay(display);
+        kitchenController.setTicketPrinter(printer);
         systemCore.setKitchenController(kitchenController);
         // ## Initialize tableTicketCoordinator
         TableTicketCoordinator tableTicketCoordinator = new TableTicketCoordinator();
@@ -226,7 +227,6 @@ public class SystemTest extends TestBasis {
 
             String tableID = "Tab-" + iString;
             TableController tableController = new TableController(systemCore, tableID);
-            tableDisplays.get(i-1).setTableController(tableController);
             tableController.setCardReader(cardReaders.get(i - 1));
             tableController.setReceiptPrinter(receiptPrinters.get(i - 1));
             tableController.setTableDisplay(tableDisplays.get(i - 1));

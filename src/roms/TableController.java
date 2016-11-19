@@ -29,12 +29,12 @@ public class TableController {
 
     public void setTableDisplay(TableDisplay tableDisplay) {
         this.tableDisplay = tableDisplay;
+        tableDisplay.setTableController(this);
     }
 
     public void startOrder() {
         logger.fine(tableId);
         systemCore.getTableTicketCoordinator().createTicket(tableId);
-        // TO BE COMPLETED
     }
 
     public void showMenu() {

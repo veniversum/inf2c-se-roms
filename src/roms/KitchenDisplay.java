@@ -66,9 +66,15 @@ public class KitchenDisplay extends AbstractIODevice {
      * SUPPORT FOR TRIGGER INPUT MESSAGES
      */
 
+    private KitchenController kitchenController;
+
+    public void setKitchenController(KitchenController kitchenController) {
+        this.kitchenController = kitchenController;
+    }
+
     public void itemReady(int ticketNumber, String menuID) {
         logger.fine(getInstanceName());
-        // TO BE COMPLETED
+        kitchenController.itemReady(ticketNumber, menuID);
     }
 
     /*

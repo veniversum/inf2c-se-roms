@@ -28,14 +28,14 @@ public class TableTicketCoordinator {
      * Submits ticket for table to order rack.
      *
      * @param tableId Table identifier
-     * @throws TicketOperationException Exception thrown when table has no ticket or ticket has already been submitted
+     * @throws Ticket.TicketOperationException Exception thrown when table has no ticket or ticket has already been submitted
      */
-    public void submitTicket(String tableId) throws TicketOperationException {
+    public void submitTicket(String tableId) throws Ticket.TicketOperationException {
         if (!tableTicketMap.containsKey(tableId))
-            throw new TicketOperationException("Table does not have an active order!");
+            throw new Ticket.TicketOperationException("Table does not have an active order!");
         Ticket ticket = tableTicketMap.get(tableId);
-        if (ticket.getSubmittedTime() != null) throw new TicketOperationException("Ticket has already been submitted!");
-        if (systemCore.getRack() == null) throw new TicketOperationException("No order rack to submit to!");
+        if (ticket.getSubmittedTime() != null) throw new Ticket.TicketOperationException("Ticket has already been submitted!");
+        if (systemCore.getRack() == null) throw new Ticket.TicketOperationException("No order rack to submit to!");
         ticket.setSubmittedTime(Clock.getInstance().getDateAndTime());
         ticket.setTicketNumber(systemCore.getRack().getNextTicketNumber());
         systemCore.getRack().submitOrder(tableTicketMap.get(tableId));
@@ -46,11 +46,11 @@ public class TableTicketCoordinator {
      *
      * @param tableId Table identifier
      * @param menuId  Menu item identifier
-     * @throws TicketOperationException Exception thrown when table has no ticket
+     * @throws Ticket.TicketOperationException Exception thrown when table has no ticket
      */
-    public void addMenuItem(String tableId, String menuId) throws TicketOperationException {
+    public void addMenuItem(String tableId, String menuId) throws Ticket.TicketOperationException {
         if (!tableTicketMap.containsKey(tableId)) {
-            throw new TicketOperationException("Table does not have an active order!");
+            throw new Ticket.TicketOperationException("Table does not have an active order!");
         }
         tableTicketMap.get(tableId).addMenuItem(menuId);
     }
@@ -60,11 +60,11 @@ public class TableTicketCoordinator {
      *
      * @param tableId Table identifier
      * @param menuId  Menu item identifier
-     * @throws TicketOperationException Exception thrown when table has no ticket
+     * @throws Ticket.TicketOperationException Exception thrown when table has no ticket
      */
-    public void removeMenuItem(String tableId, String menuId) throws TicketOperationException {
+    public void removeMenuItem(String tableId, String menuId) throws Ticket.TicketOperationException {
         if (!tableTicketMap.containsKey(tableId)) {
-            throw new TicketOperationException("Table does not have an active order!");
+            throw new Ticket.TicketOperationException("Table does not have an active order!");
         }
         tableTicketMap.get(tableId).removeMenuItem(menuId);
     }
@@ -79,9 +79,4 @@ public class TableTicketCoordinator {
         return tableTicketMap.get(tableId);
     }
 
-    public static class TicketOperationException extends RuntimeException {
-        public TicketOperationException(String message) {
-            super(message);
-        }
-    }
 }

@@ -48,6 +48,9 @@ public class SystemCore {
     public void cancelReadyUp() {
         passLight.switchOff();
     }
+    public void displayReadyUp() {
+        passLight.switchOn();
+    }
 
     public MenuProvider getMenuProvider() {
         return menuProvider;

@@ -1,9 +1,4 @@
-/**
- *
- */
 package roms;
-
-import roms.TableTicketCoordinator.TicketOperationException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,9 +12,11 @@ public class Ticket {
     private Map<String, OrderItem> orderItemMap;
     private int ticketNumber;
     private Date submittedTime;
+    private Status status;
 
     private Ticket() {
         orderItemMap = new TreeMap<>();
+        status = Status.NONE_FULFILLED;
     }
 
     public Ticket(String tableID) {
@@ -75,6 +72,33 @@ public class Ticket {
         orderItemMap.computeIfPresent(menuId, (k, v) -> v.getQuantity() > 1 ? v.changeQuantity(-1) : null);
     }
 
+    public void fulfillMenuItem(String menuId) {
+        if (!orderItemMap.containsKey(menuId))
+            throw new TicketOperationException("Ticket does not contain menu item to be fulfilled");
+        orderItemMap.get(menuId).fulfill();
+    }
+
+    /**
+     * Lazily updates ticket status. May return multiple statuses if ticket contains only 1 order item.
+     *
+     * @return List of ticket statuses
+     */
+    public Set<Status> getTicketStatus() {
+        Set<Status> statuses = EnumSet.noneOf(Status.class);
+        int fulfilledCount = orderItemMap.values().stream().mapToInt(OrderItem::getFulfilledQuantity).sum();
+        int totalCount = orderItemMap.values().stream().mapToInt(OrderItem::getQuantity).sum();
+
+        if (fulfilledCount == 0) return EnumSet.of(Status.NONE_FULFILLED);
+        if (status == Status.NONE_FULFILLED && fulfilledCount == 1) {
+            status = Status.FIRST_ITEM_FULFILLED;
+            statuses.add(Status.FIRST_ITEM_FULFILLED);
+        }
+        if (status == Status.FIRST_ITEM_FULFILLED && fulfilledCount == totalCount) {
+            status = Status.ALL_FULFILLED;
+            statuses.add(Status.ALL_FULFILLED);
+        }
+        return statuses;
+    }
     public String getTableID() {
         return tableID;
     }
@@ -117,5 +141,13 @@ public class Ticket {
         return orderItemMap.entrySet()
                 .stream()
                 .map(e -> e.getValue().getPrice().multiply(e.getValue().getQuantity())).reduce(new Money(), Money::add);
+    }
+
+    public enum Status {NONE_FULFILLED, FIRST_ITEM_FULFILLED, ALL_FULFILLED}
+
+    public static class TicketOperationException extends RuntimeException {
+        public TicketOperationException(String message) {
+            super(message);
+        }
     }
 }
