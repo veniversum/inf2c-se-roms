@@ -110,28 +110,25 @@ public class TableDisplay extends AbstractIODevice {
     public void showMenu() {
         logger.fine(getInstanceName());
         displayMenu(systemCore.getMenuProvider().getDefaultMenu());
-        // TO BE COMPLETED
     }
     public void showTicket() {
         logger.fine(getInstanceName());
         displayTicket(systemCore.getTableTicketCoordinator().getTicket(getInstanceName()));
-        // TO BE COMPLETED
     }
     public void addMenuItem(String menuID) {
         logger.fine(getInstanceName());
-        systemCore.getTableTicketCoordinator().getTicket(getInstanceName()).addMenuItem(menuID);
+        systemCore.getTableTicketCoordinator().addMenuItem(getInstanceName(), menuID);
     }
     public void removeMenuItem(String menuID) {
         logger.fine(getInstanceName());
-        systemCore.getTableTicketCoordinator().getTicket(getInstanceName()).removeMenuItem(menuID);
+        systemCore.getTableTicketCoordinator().removeMenuItem(getInstanceName(), menuID);
     }
     public void submitOrder() {
         logger.fine(getInstanceName());
-        // TO BE COMPLETED
+        systemCore.getTableTicketCoordinator().submitTicket(getInstanceName());
     }
     public void payBill() {
         logger.fine(getInstanceName());
-        // TO BE COMPLETED
     }
 
     /*
@@ -146,6 +143,7 @@ public class TableDisplay extends AbstractIODevice {
      * SUPPORT FOR OUTPUT MESSAGES
      */
 
+    @SuppressWarnings("Duplicates")
     public void displayMenu(Menu menu) {
         logger.fine(getInstanceName());
 
