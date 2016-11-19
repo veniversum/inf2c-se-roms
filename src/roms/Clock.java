@@ -133,19 +133,21 @@ public class Clock extends AbstractInputDevice {
     /*
      * FIELD(S) AND SETTER(S) FOR MESSAGE DESTINATIONS
      */
-    
+
     /*
      * SUPPORT FOR TRIGGER INPUT MESSAGES
      */
+    private static SystemCore systemCore;
+
+    public static void setSystemCore(SystemCore systemCore) {
+        Clock.systemCore = systemCore;
+    }
 
     public void tick() {
         logger.fine(getInstanceName());
-        
-        // TO BE COMPLETED
-        //  E.g. add calls to objects that need to be notified of ticks.
-        
+        systemCore.getKitchenController().displayRackToAll(systemCore.getRack());
     }
-    
+
     /*
      * Put all class modifications above.
      **********************************************************************
