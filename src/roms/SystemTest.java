@@ -97,7 +97,7 @@ public class SystemTest extends TestBasis {
         
         Clock.initialiseInstance();
         Clock.getInstance().addDistributorLinks(distributor);
-                
+
         TicketPrinter printer = new TicketPrinter("tp");
         printer.setCollector(collector);
       
@@ -185,21 +185,34 @@ public class SystemTest extends TestBasis {
         // Create systemCore object and links between it and IO devices.
         
         SystemCore systemCore = new SystemCore();
+
+        // # INITIALIZE SYSTEM CORE
+        // ## Initialize rack
+        Rack rack = new Rack();
+        systemCore.setRack(rack);
+        // ## Initialize kitchen controller
+        KitchenController kitchenController = new KitchenController();
+        kitchenController.addKitchenDisplay(display);
+        systemCore.setKitchenController(kitchenController);
+        // ## Initialize tableTicketCoordinator
         TableTicketCoordinator tableTicketCoordinator = new TableTicketCoordinator();
         systemCore.setTableTicketCoordinator(tableTicketCoordinator);
-        tableDisplays.stream().forEach(td -> td.setSystemCore(systemCore));
-        tableTicketCoordinator.setSystemCore(systemCore);
-        systemCore.setPassLight(light);
-
-        button.setSystemCore(systemCore);
-        officeKVM.setSystemCore(systemCore);
-
+        // ## Initialize menu and menuProvider
         Menu menu = new Menu();
         MenuProvider menuProvider = new MenuProvider(menu);
         systemCore.setMenuProvider(menuProvider);
 
+        systemCore.setPassLight(light);
+        // END INITIALIZE SYSTEM CORE
 
-        
+        tableDisplays.stream().forEach(td -> td.setSystemCore(systemCore));
+        tableTicketCoordinator.setSystemCore(systemCore);
+
+        button.setSystemCore(systemCore);
+        officeKVM.setSystemCore(systemCore);
+        Clock.setSystemCore(systemCore);
+
+
         // TABLE-RELATED
         for (int i = 1; i <= NUM_TABLES; i++) {
             

@@ -11,7 +11,25 @@ package roms;
 public class SystemCore {
     private TableTicketCoordinator tableTicketCoordinator;
     private MenuProvider menuProvider;
+    private KitchenController kitchenController;
+    private Rack rack;
     private PassLight passLight;
+
+    public KitchenController getKitchenController() {
+        return kitchenController;
+    }
+
+    public void setKitchenController(KitchenController kitchenController) {
+        this.kitchenController = kitchenController;
+    }
+
+    public Rack getRack() {
+        return rack;
+    }
+
+    public void setRack(Rack rack) {
+        this.rack = rack;
+    }
 
     public TableTicketCoordinator getTableTicketCoordinator() {
         return tableTicketCoordinator;
