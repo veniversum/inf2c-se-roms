@@ -1,6 +1,5 @@
 package roms;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,14 +7,10 @@ import static org.junit.Assert.assertEquals;
 
 public class MenuItemTest {
     private MenuItem menuItem;
+
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         menuItem = new MenuItem("test", new Money("1.00"));
-    }
-
-    @After
-    public void tearDown() throws Exception {
-
     }
 
     @Test
