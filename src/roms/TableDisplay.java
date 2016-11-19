@@ -19,8 +19,6 @@ public class TableDisplay extends AbstractIODevice {
     /*
      * SUPPORT FOR TRIGGER INPUT MESSAGES
      */
-    private SystemCore systemCore;
-
 
     /**
      *
@@ -98,37 +96,41 @@ public class TableDisplay extends AbstractIODevice {
         }
     }
 
-    public void setSystemCore(SystemCore systemCore) {
-        this.systemCore = systemCore;
+
+    private TableController tableController;
+
+    public void setTableController(TableController tableController) {
+        this.tableController = tableController;
     }
 
     public void startOrder() {
         logger.fine(getInstanceName());
-        systemCore.getTableTicketCoordinator().createTicket(getInstanceName());
+        tableController.startOrder();
         // TO BE COMPLETED
     }
     public void showMenu() {
         logger.fine(getInstanceName());
-        displayMenu(systemCore.getMenuProvider().getDefaultMenu());
+        tableController.showMenu();
     }
     public void showTicket() {
         logger.fine(getInstanceName());
-        displayTicket(systemCore.getTableTicketCoordinator().getTicket(getInstanceName()));
+        tableController.showTicket();
     }
     public void addMenuItem(String menuID) {
         logger.fine(getInstanceName());
-        systemCore.getTableTicketCoordinator().addMenuItem(getInstanceName(), menuID);
+        tableController.addMenuItem(menuID);
     }
     public void removeMenuItem(String menuID) {
         logger.fine(getInstanceName());
-        systemCore.getTableTicketCoordinator().removeMenuItem(getInstanceName(), menuID);
+        tableController.removeMenuItem(menuID);
     }
     public void submitOrder() {
         logger.fine(getInstanceName());
-        systemCore.getTableTicketCoordinator().submitTicket(getInstanceName());
+        tableController.submitOrder();
     }
     public void payBill() {
         logger.fine(getInstanceName());
+        tableController.payBill();
     }
 
     /*

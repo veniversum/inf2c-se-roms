@@ -12,6 +12,7 @@ public class SystemCore {
     private TableTicketCoordinator tableTicketCoordinator;
     private MenuProvider menuProvider;
     private KitchenController kitchenController;
+    private BankClient bankClient;
     private Rack rack;
     private PassLight passLight;
 
@@ -54,5 +55,13 @@ public class SystemCore {
 
     public void setMenuProvider(MenuProvider menuProvider) {
         this.menuProvider = menuProvider;
+    }
+
+    public BankClient getBankClient() {
+        return bankClient;
+    }
+
+    public void setBankClient(BankClient bankClient) {
+        this.bankClient = bankClient;
     }
 }

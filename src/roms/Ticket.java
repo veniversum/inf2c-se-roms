@@ -17,6 +17,7 @@ public class Ticket {
     private Map<String, OrderItem> orderItemMap;
     private int ticketNumber;
     private Date submittedTime;
+
     private Ticket() {
         orderItemMap = new TreeMap<>();
     }
@@ -100,11 +101,21 @@ public class Ticket {
      * @return Above formatted list
      */
     public List<String> toStrings() {
-        return orderItemMap.entrySet().stream().map(e -> Arrays.asList(e.getKey(), e.getValue().getDescription(), String.valueOf(e.getValue().getQuantity())))
+        return orderItemMap.entrySet()
+                .stream()
+                .map(e -> Arrays.asList(e.getKey()
+                        , e.getValue().getDescription()
+                        , String.valueOf(e.getValue().getQuantity())))
                 .flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     protected Set<Map.Entry<String, OrderItem>> getOrderEntrySet() {
         return orderItemMap.entrySet();
+    }
+
+    public Money getPayableAmount() {
+        return orderItemMap.entrySet()
+                .stream()
+                .map(e -> e.getValue().getPrice().multiply(e.getValue().getQuantity())).reduce(new Money(), Money::add);
     }
 }
