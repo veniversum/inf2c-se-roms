@@ -97,7 +97,7 @@ public class OfficeKVM extends AbstractIODevice {
 
     public void removeFromMenu(String menuID) {
         logger.fine(getInstanceName());
-        // TO BE COMPLETED
+        systemCore.getMenuProvider().getDefaultMenu().removeMenuItem(menuID);
     }
 
     /*
