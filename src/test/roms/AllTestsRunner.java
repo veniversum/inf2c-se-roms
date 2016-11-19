@@ -9,7 +9,6 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public class AllTestsRunner {
     private final PrintStream defaultOut = System.out;
@@ -31,7 +30,7 @@ public class AllTestsRunner {
         System.setErr(defaultErr);
     }
 
-    public boolean checkAsserts() {
+    private boolean checkAsserts() {
         String output = outCapture.toString();
         assertTrue(output.contains("ACTUAL EVENTS AS EXPECTED"));
         assertFalse(output.contains("ACTUAL EVENTS NOT AS EXPECTED"));

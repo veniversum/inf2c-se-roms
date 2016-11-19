@@ -3,9 +3,8 @@
  */
 package roms;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * The Order rack
@@ -14,6 +13,16 @@ import java.util.List;
  *
  */
 public class Rack {
+    private Queue<Ticket> ticketQueue = new LinkedList<>();
+    private int ticketNumberCounter = 0;
+
+    public int getNextTicketNumber() {
+        return ++ticketNumberCounter;
+    }
+
+    public void submitOrder(Ticket ticket) {
+        ticketQueue.offer(ticket);
+    }
        
     /**
      * Format rack contents as list of strings, with, per order item in each
@@ -54,18 +63,19 @@ public class Rack {
      * @return
      */
     public List<String> toStrings() {
-         
-        // Dummy implementation. 
-        String[] stringArray = 
-            {"15", "1", "D1", "Wine",       "1", "0", 
-             "15", "1", "D3", "Tap water",  "2", "2",
-             "15", "1", "M1", "Fish",       "3", "0",
-             "9", "2", "D4", "Coffee",     "2", "2",
-             "9", "2", "P2", "Cake",       "2", "1" 
-            };
-        List<String> ss = new ArrayList<String>();
-        ss.addAll(Arrays.asList(stringArray));
-        return ss;
+        return ticketQueue.stream().map(this::formatTicket).flatMap(Collection::stream).collect(Collectors.toList());
+    }
+
+    private List<String> formatTicket(Ticket ticket) {
+        String timeSince = String.valueOf(Clock.minutesBetween(ticket.getSubmittedTime(), Clock.getInstance().getDateAndTime()));
+        String ticketNumber = String.valueOf(ticket.getTicketNumber());
+        return ticket.getOrderEntrySet().stream().map(e -> Arrays.asList(
+                timeSince,
+                ticketNumber,
+                String.valueOf(e.getKey()),
+                String.valueOf(e.getValue().getDescription()),
+                String.valueOf(e.getValue().getQuantity()),
+                String.valueOf(e.getValue().getFulfilledQuantity()))).flatMap(Collection::stream).collect(Collectors.toList());
     }
     
 }
