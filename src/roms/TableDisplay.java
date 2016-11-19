@@ -103,32 +103,32 @@ public class TableDisplay extends AbstractIODevice {
         this.tableController = tableController;
     }
 
-    public void startOrder() {
+    private void startOrder() {
         logger.fine(getInstanceName());
         tableController.startOrder();
         // TO BE COMPLETED
     }
-    public void showMenu() {
+    private void showMenu() {
         logger.fine(getInstanceName());
         tableController.showMenu();
     }
-    public void showTicket() {
+    private void showTicket() {
         logger.fine(getInstanceName());
         tableController.showTicket();
     }
-    public void addMenuItem(String menuID) {
+    private void addMenuItem(String menuID) {
         logger.fine(getInstanceName());
         tableController.addMenuItem(menuID);
     }
-    public void removeMenuItem(String menuID) {
+    private void removeMenuItem(String menuID) {
         logger.fine(getInstanceName());
         tableController.removeMenuItem(menuID);
     }
-    public void submitOrder() {
+    private void submitOrder() {
         logger.fine(getInstanceName());
         tableController.submitOrder();
     }
-    public void payBill() {
+    private void payBill() {
         logger.fine(getInstanceName());
         tableController.payBill();
     }
@@ -177,7 +177,6 @@ public class TableDisplay extends AbstractIODevice {
         messageArgs.add("Total:");
         messageArgs.add(total.toString());
         sendMessage("approveBill", messageArgs);
-
     }
 
 
