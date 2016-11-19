@@ -9,3 +9,6 @@
     D1,  Soft Drink,     3,
     M1,        Fish,     2,
     M2,   Veg Chili,     1;
+1 21:30, TableDisplay, td1, approveBill, Total:, 27.10;
+1 21:32, BankClient, bc, makePayment, XYZ1234, 27.10;
+1 21:33, ReceiptPrinter, rp1, takeReceipt, Total:, 27.10, AuthCode:, ABCD;
