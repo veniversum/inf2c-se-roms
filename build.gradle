@@ -69,12 +69,12 @@ jacocoTestReport {
         def counters = results.counter
         def metrics = [:]
         metrics << [
-                'instruction': percentage(counters.find { it.'@type'.equals('INSTRUCTION') }),
-                'branch'     : percentage(counters.find { it.'@type'.equals('BRANCH') }),
-                'line'       : percentage(counters.find { it.'@type'.equals('LINE') }),
-                'complexity' : percentage(counters.find { it.'@type'.equals('COMPLEXITY') }),
-                'method'     : percentage(counters.find { it.'@type'.equals('METHOD') }),
-                'class'      : percentage(counters.find { it.'@type'.equals('CLASS') })
+                'instruction': percentage(counters.find { (it.'@type' == 'INSTRUCTION') }),
+                'branch'     : percentage(counters.find { (it.'@type' == 'BRANCH') }),
+                'line'       : percentage(counters.find { (it.'@type' == 'LINE') }),
+                'complexity' : percentage(counters.find { (it.'@type' == 'COMPLEXITY') }),
+                'method'     : percentage(counters.find { (it.'@type' == 'METHOD') }),
+                'class'      : percentage(counters.find { (it.'@type' == 'CLASS') })
         ]
     }
 }
@@ -90,22 +90,24 @@ task uploadCoverageToCodacy(type: JavaExec, dependsOn: jacocoTestReport) {
     ]
 }
 
-check.dependsOn jacocoTestReport
+task(codacyDepsize) {
+    doLast {
+        def size = 0;
+        configurations.codacy.collect { it.length() / (1024 * 1024) }.each { size += it }
+        println "Total dependencies size: ${Math.round(size * 100) / 100} Mb"
 
-task(codacyDepsize) << {
-    def size = 0;
-    configurations.codacy.collect { it.length() / (1024 * 1024) }.each { size += it }
-    println "Total dependencies size: ${Math.round(size * 100) / 100} Mb"
-
-    configurations
-            .codacy
-            .sort { -it.length() }
-            .each { println "${it.name} : ${Math.round(it.length() / (1024) * 100) / 100} kb" }
+        configurations
+                .codacy
+                .sort { -it.length() }
+                .each { println "${it.name} : ${Math.round(it.length() / (1024) * 100) / 100} kb" }
+    }
 }
 
-task(codacyLocs) << {
-    configurations.codacy.each {
-        String jarName = it
-        println jarName
+task(codacyLocs) {
+    doLast {
+        configurations.codacy.each {
+            String jarName = it
+            println jarName
+        }
     }
 }

@@ -15,9 +15,11 @@ import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static roms.LoggerUtil.logger;
 
 @RunWith(Parameterized.class)
 public class AllTestsRunner {
+    private final String LS = System.lineSeparator();
     private final PrintStream defaultOut = System.out;
     private final PrintStream defaultErr = System.err;
     private final ByteArrayOutputStream outCapture = new ByteArrayOutputStream();
@@ -32,6 +34,14 @@ public class AllTestsRunner {
     @Parameterized.Parameters(name="{0}")
     public static Collection<String> testFiles() {
         return Arrays.stream(new File("data/").list((dir, name) -> name.endsWith(".in.txt"))).map(s -> s.replace(".in.txt","")).collect(Collectors.toList());
+    }
+
+    @Before
+    public void makeBanner(){
+        logger.info(LS
+                + "#############################################################" + LS
+                + "RUNNING TEST FILE : " + filenameRoot + LS
+                + "#############################################################");
     }
 
     @Before
