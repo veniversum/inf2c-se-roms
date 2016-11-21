@@ -2,7 +2,7 @@ package roms;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class TicketOperationExceptionTest {
 
@@ -11,7 +11,7 @@ public class TicketOperationExceptionTest {
         try {
             throw new Ticket.TicketOperationException("this is a test message");
         } catch (Ticket.TicketOperationException e) {
-            assertTrue("exception caught", true);
+            assertEquals(e.getMessage(), "this is a test message");
         }
     }
 }
