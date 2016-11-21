@@ -1,5 +1,7 @@
 package roms;
 
+import static roms.LoggerUtil.logger;
+
 public class MenuItem {
     private String description;
     private Money price;
@@ -8,8 +10,17 @@ public class MenuItem {
     }
 
     public MenuItem(String description, Money price) {
+        logger.fine("init");
         this.description = description;
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "MenuItem{" +
+                "description='" + description + '\'' +
+                ", price=" + price +
+                '}';
     }
 
     public String getDescription() {

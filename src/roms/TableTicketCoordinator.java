@@ -3,6 +3,8 @@ package roms;
 import java.util.HashMap;
 import java.util.Map;
 
+import static roms.LoggerUtil.logger;
+
 public class TableTicketCoordinator {
     private Map<String, Ticket> tableTicketMap = new HashMap<>();
     private SystemCore systemCore;
@@ -18,8 +20,8 @@ public class TableTicketCoordinator {
      * @return new Ticket object
      */
     public Ticket createTicket(String tableId) {
+        logger.fine("init : " + tableId);
         Ticket ticket = new Ticket(tableId);
-        ticket.setSystemCore(systemCore);
         tableTicketMap.put(tableId, ticket);
         return ticket;
     }
@@ -38,6 +40,7 @@ public class TableTicketCoordinator {
         if (systemCore.getRack() == null) throw new Ticket.TicketOperationException("No order rack to submit to!");
         ticket.setSubmittedTime(Clock.getInstance().getDateAndTime());
         ticket.setTicketNumber(systemCore.getRack().getNextTicketNumber());
+        logger.fine("submitting ticket #" + ticket.getTicketNumber());
         systemCore.getRack().submitOrder(tableTicketMap.get(tableId));
     }
 
@@ -52,7 +55,12 @@ public class TableTicketCoordinator {
         if (!tableTicketMap.containsKey(tableId)) {
             throw new Ticket.TicketOperationException("Table does not have an active order!");
         }
-        tableTicketMap.get(tableId).addMenuItem(menuId);
+        Menu menu = systemCore.getMenuProvider().getMenu();
+        if (menu == null) throw new Ticket.TicketOperationException("Default menu does not exist");
+        MenuItem menuItem = systemCore.getMenuProvider().getMenu().getMenuItem(menuId);
+        if (menuItem == null) throw new Ticket.TicketOperationException("Default menu does not contain menu item");
+        logger.fine("adding menu item " + menuId + " to table " + tableId);
+        tableTicketMap.get(tableId).addMenuItem(menuId, menuItem);
     }
 
     /**
@@ -66,6 +74,7 @@ public class TableTicketCoordinator {
         if (!tableTicketMap.containsKey(tableId)) {
             throw new Ticket.TicketOperationException("Table does not have an active order!");
         }
+        logger.fine("removing menu item " + menuId + " from table " + tableId);
         tableTicketMap.get(tableId).removeMenuItem(menuId);
     }
 
@@ -76,6 +85,7 @@ public class TableTicketCoordinator {
      * @return Ticket instance associated with table if exists
      */
     public Ticket getTicket(String tableId) {
+        logger.fine(tableId);
         return tableTicketMap.get(tableId);
     }
 

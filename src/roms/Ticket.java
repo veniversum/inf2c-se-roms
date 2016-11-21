@@ -3,11 +3,12 @@ package roms;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static roms.LoggerUtil.logger;
+
 /**
  * @author pbj
  */
 public class Ticket {
-    private SystemCore systemCore;
     private String tableID;
     private Map<String, OrderItem> orderItemMap;
     private int ticketNumber;
@@ -21,6 +22,7 @@ public class Ticket {
 
     public Ticket(String tableID) {
         this();
+        logger.fine("new ticket created for table " + tableID);
         this.tableID = tableID;
     }
 
@@ -30,22 +32,22 @@ public class Ticket {
      * @return Ticket number
      */
     public int getTicketNumber() {
+        logger.fine("");
         return ticketNumber;
     }
 
     public void setTicketNumber(int ticketNumber) {
+        logger.fine(String.valueOf(ticketNumber));
         this.ticketNumber = ticketNumber;
     }
 
-    public void setSystemCore(SystemCore systemCore) {
-        this.systemCore = systemCore;
-    }
-
     public Date getSubmittedTime() {
+        logger.fine("");
         return submittedTime;
     }
 
     public void setSubmittedTime(Date submittedTime) {
+        logger.fine("");
         this.submittedTime = submittedTime;
     }
 
@@ -55,11 +57,8 @@ public class Ticket {
      * @param menuId Menu item identifier
      * @throws TicketOperationException If no menu has not been initialized or menu item does not exist
      */
-    public void addMenuItem(String menuId) throws TicketOperationException {
-        Menu menu = systemCore.getMenuProvider().getDefaultMenu();
-        if (menu == null) throw new TicketOperationException("Default menu does not exist");
-        MenuItem menuItem = systemCore.getMenuProvider().getDefaultMenu().getMenuItem(menuId);
-        if (menuItem == null) throw new TicketOperationException("Default menu does not contain menu item");
+    public void addMenuItem(String menuId, MenuItem menuItem) throws TicketOperationException {
+        logger.fine(menuId + " : " + menuItem.toString());
         orderItemMap.compute(menuId, (k, v) -> v == null ? new OrderItem(menuItem) : v.changeQuantity(1));
     }
 
@@ -69,10 +68,12 @@ public class Ticket {
      * @param menuId Menu item identifier
      */
     public void removeMenuItem(String menuId) {
+        logger.fine(menuId);
         orderItemMap.computeIfPresent(menuId, (k, v) -> v.getQuantity() > 1 ? v.changeQuantity(-1) : null);
     }
 
     public void fulfillMenuItem(String menuId) {
+        logger.fine(menuId);
         if (!orderItemMap.containsKey(menuId))
             throw new TicketOperationException("Ticket does not contain menu item to be fulfilled");
         orderItemMap.get(menuId).fulfill();
@@ -84,22 +85,28 @@ public class Ticket {
      * @return List of ticket statuses
      */
     public Set<Status> getTicketStatus() {
+        logger.fine("entry");
         Set<Status> statuses = EnumSet.noneOf(Status.class);
         int fulfilledCount = orderItemMap.values().stream().mapToInt(OrderItem::getFulfilledQuantity).sum();
         int totalCount = orderItemMap.values().stream().mapToInt(OrderItem::getQuantity).sum();
 
         if (fulfilledCount == 0) return EnumSet.of(Status.NONE_FULFILLED);
         if (status == Status.NONE_FULFILLED && fulfilledCount == 1) {
+            logger.fine("first item fulfilled");
             status = Status.FIRST_ITEM_FULFILLED;
             statuses.add(Status.FIRST_ITEM_FULFILLED);
         }
         if (status == Status.FIRST_ITEM_FULFILLED && fulfilledCount == totalCount) {
+            logger.fine("last item fulfilled");
             status = Status.ALL_FULFILLED;
             statuses.add(Status.ALL_FULFILLED);
         }
+        logger.fine("return");
         return statuses;
     }
+
     public String getTableID() {
+        logger.fine(tableID);
         return tableID;
     }
 
@@ -138,6 +145,7 @@ public class Ticket {
     }
 
     public Money getPayableAmount() {
+        logger.fine("");
         return orderItemMap.entrySet()
                 .stream()
                 .map(e -> e.getValue().getPrice().multiply(e.getValue().getQuantity())).reduce(new Money(), Money::add);
@@ -148,6 +156,8 @@ public class Ticket {
     public static class TicketOperationException extends RuntimeException {
         public TicketOperationException(String message) {
             super(message);
+            logger.fine(getStackTrace()[0].getClassName() + "::" + getStackTrace()[0].getMethodName()
+                    + " raised exception with message : " + message);
         }
     }
 }

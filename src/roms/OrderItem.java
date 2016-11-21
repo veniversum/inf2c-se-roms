@@ -1,11 +1,14 @@
 package roms;
 
+import static roms.LoggerUtil.logger;
+
 public class OrderItem extends MenuItem {
     private int quantity;
     private int fulfilledQuantity;
     private MenuItem menuItem;
 
     public OrderItem(MenuItem menuItem) {
+        logger.fine("init");
         this.menuItem = menuItem;
         quantity = 1;
     }
@@ -20,6 +23,7 @@ public class OrderItem extends MenuItem {
     }
 
     public OrderItem changeQuantity(int delta) {
+        logger.fine(String.valueOf(delta));
         this.quantity += delta;
         return this;
     }
@@ -35,6 +39,7 @@ public class OrderItem extends MenuItem {
      * @return whether order is fulfilled
      */
     public boolean fulfill() {
+        logger.fine("");
         if (fulfilledQuantity >= quantity) return true;
         fulfilledQuantity++;
         return false;

@@ -87,17 +87,17 @@ public class OfficeKVM extends AbstractIODevice {
 
     public void showMenu() {
         logger.fine(getInstanceName());
-        displayMenu(systemCore.getMenuProvider().getDefaultMenu());
+        displayMenu(systemCore.getMenuProvider().getMenu());
     }
  
     public void addToMenu(String menuID, String description, Money price) {
         logger.fine(getInstanceName());
-        systemCore.getMenuProvider().getDefaultMenu().addMenuItem(menuID, description, price);
+        systemCore.getMenuProvider().getMenu().addMenuItem(menuID, description, price);
     }
 
     public void removeFromMenu(String menuID) {
         logger.fine(getInstanceName());
-        systemCore.getMenuProvider().getDefaultMenu().removeMenuItem(menuID);
+        systemCore.getMenuProvider().getMenu().removeMenuItem(menuID);
     }
 
     /*

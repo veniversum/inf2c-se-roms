@@ -1,9 +1,8 @@
 package roms;
 
-import java.util.logging.Logger;
+import static roms.LoggerUtil.logger;
 
 public class TableController {
-    protected static final Logger logger = Logger.getLogger("roms");
     private String tableId;
     private SystemCore systemCore;
     private CardReader cardReader;
@@ -12,10 +11,11 @@ public class TableController {
 
     public TableController(SystemCore systemCore, String tableId) {
         this(tableId);
+        logger.fine("init");
         this.systemCore = systemCore;
     }
 
-    public TableController(String tableId) {
+    private TableController(String tableId) {
         this.tableId = tableId;
     }
 
@@ -39,7 +39,7 @@ public class TableController {
 
     public void showMenu() {
         logger.fine(tableId);
-        tableDisplay.displayMenu(systemCore.getMenuProvider().getDefaultMenu());
+        tableDisplay.displayMenu(systemCore.getMenuProvider().getMenu());
     }
 
     public void showTicket() {
@@ -63,6 +63,7 @@ public class TableController {
     }
 
     public void payBill() {
+        logger.fine(tableId);
         Money payableAmount = systemCore.getTableTicketCoordinator().getTicket(tableId).getPayableAmount();
         tableDisplay.displayBill(payableAmount);
         String authCode = systemCore.getBankClient().authorisePayment(cardReader.waitForCardDetails(), payableAmount);

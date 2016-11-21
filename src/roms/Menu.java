@@ -1,31 +1,56 @@
-/**
- *
- */
 package roms;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static roms.LoggerUtil.logger;
+
+
 /**
- * @author pbj
+ *  Menu POJO for representing menu domain entity
  */
 public class Menu {
     private Map<String, MenuItem> menuItemMap;
 
+    /**
+     * Default constructor for menu
+     */
     public Menu() {
+        logger.fine("init");
         menuItemMap = new TreeMap<>();
     }
 
+    /**
+     * Adds menu item entry to menu. Replaces existing item if exists.
+     *
+     * @param menuID unique identifier
+     * @param description item name
+     * @param price item price
+     */
     public void addMenuItem(String menuID, String description, Money price) {
+        logger.fine(menuID + ", " + description + ", " + price);
         menuItemMap.put(menuID, new MenuItem(description, price));
     }
 
+    /**
+     * Retrieves menu item from menu using ID.
+     *
+     * @param menuID unique identifier
+     * @return MenuItem instance
+     */
     public MenuItem getMenuItem(String menuID) {
+        logger.fine(menuID);
         return menuItemMap.get(menuID);
     }
 
-    public void removeMenuItem(String id) {
-        assert menuItemMap.containsKey(id) : "Trying to remove item menu not already in menu";
+    /**
+     * Removes menu item from menu using ID.
+     *
+     * @param menuID unique identifier
+     */
+    public void removeMenuItem(String menuID) {
+        logger.fine(menuID);
+        assert menuItemMap.containsKey(menuID) : "Trying to remove item menu not already in menu";
         /*
         THIS IS BAD BAD BAD BAD PRACTICE! Should NOT be used in ANY kind of production systems.
         The above assert is only included because Section 3.4 explicitly mentions so. We will thus
@@ -54,7 +79,7 @@ public class Menu {
         exceptions are handled by multiple parts of the program, each rethrowing a new exception to the next
         handler. In fact, in this case it might be best to at most just log the exception.
          */
-        menuItemMap.remove(id);
+        menuItemMap.remove(menuID);
     }
 
     /**
@@ -76,7 +101,7 @@ public class Menu {
      * These lists of strings are used by TableDisplay and TicketPrinter
      * to produce formatted ticket output messages.
      *
-     * @return
+     * @return List of string in described format
      */
     public List<String> toStrings() {
         return menuItemMap.entrySet()
