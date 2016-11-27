@@ -14,6 +14,11 @@ public class Rack {
     private Map<Integer, Ticket> ticketQueue = new TreeMap<>();
     private int ticketNumberCounter = 0;
 
+    /**
+     * Generates a new unique, auto-incrementing ticket number
+     *
+     * @return next ticket number
+     */
     public int getNextTicketNumber() {
         logger.fine("generated ticket number " + ticketNumberCounter);
         return ++ticketNumberCounter;

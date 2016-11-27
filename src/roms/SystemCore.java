@@ -6,9 +6,8 @@ package roms;
 import static roms.LoggerUtil.logger;
 
 /**
- * @author pbj
- *         <p>
- *         Demonstration core system class.
+ * A system core that connects critical central components of the system.
+ * Should only be accessed by controller classes!!
  */
 public class SystemCore {
     private TableTicketCoordinator tableTicketCoordinator;
@@ -16,7 +15,6 @@ public class SystemCore {
     private KitchenController kitchenController;
     private BankClient bankClient;
     private Rack rack;
-    private PassLight passLight;
 
     public KitchenController getKitchenController() {
         return kitchenController;
@@ -45,21 +43,6 @@ public class SystemCore {
     public void setTableTicketCoordinator(TableTicketCoordinator tableTicketCoordinator) {
         logger.fine("");
         this.tableTicketCoordinator = tableTicketCoordinator;
-    }
-
-    public void setPassLight(PassLight pl) {
-        logger.fine("");
-        passLight = pl;
-    }
-
-
-    public void cancelReadyUp() {
-        logger.fine("");
-        passLight.switchOff();
-    }
-    public void displayReadyUp() {
-        logger.fine("");
-        passLight.switchOn();
     }
 
     public MenuProvider getMenuProvider() {

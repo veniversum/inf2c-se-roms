@@ -2,18 +2,125 @@
 <Diagram>
   <ID>JAVA</ID>
   <OriginalElement />
-  <nodes />
+  <nodes>
+    <node x="882.0" y="207.0">roms.TableDisplay</node>
+    <node x="362.0" y="498.0">roms.Event</node>
+    <node x="528.0" y="424.0">roms.MenuProvider</node>
+    <node x="1405.0" y="69.0">roms.AbstractOutputDevice</node>
+    <node x="200.0" y="424.0">roms.KitchenController</node>
+    <node x="140.0" y="498.0">roms.Money</node>
+    <node x="0.0" y="0.0">roms.AbstractDevice</node>
+    <node x="1020.0" y="207.0">roms.KitchenDisplay</node>
+    <node x="151.0" y="69.0">roms.AbstractInputDevice</node>
+    <node x="624.0" y="207.0">roms.BankClient</node>
+    <node x="0.0" y="498.0">roms.SystemCore</node>
+    <node x="207.0" y="350.0">roms.Ticket.TicketOperationException</node>
+    <node x="753.0" y="207.0">roms.OfficeKVM</node>
+    <node x="370.0" y="424.0">roms.TableController</node>
+    <node x="1862.0" y="138.0">roms.TicketPrinter</node>
+    <node x="461.0" y="138.0">roms.AbstractIODevice</node>
+    <node x="330.0" y="138.0">roms.PassButton</node>
+    <node x="0.0" y="424.0">roms.TableTicketCoordinator</node>
+    <node x="254.0" y="498.0">roms.Menu</node>
+    <node x="1170.0" y="138.0">roms.CardReader</node>
+    <node x="1303.0" y="138.0">roms.Clock</node>
+    <node x="468.0" y="498.0">roms.Rack</node>
+    <node x="420.0" y="281.0">roms.OrderItem</node>
+    <node x="1594.0" y="138.0">roms.ReceiptPrinter</node>
+    <node x="0.0" y="281.0">roms.Ticket</node>
+    <node x="103.0" y="350.0">roms.Ticket.Status</node>
+    <node x="1740.0" y="138.0">roms.PassLight</node>
+    <node x="546.0" y="350.0">roms.MenuItem</node>
+  </nodes>
   <notes />
-  <edges />
-  <settings layout="Hierarchic Group" zoom="1.0" x="0.0" y="0.0" />
+  <edges>
+    <edge source="roms.PassButton" target="roms.AbstractInputDevice">
+      <point x="0.0" y="0.0" />
+      <point x="375.5" y="83.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.KitchenDisplay" target="roms.AbstractIODevice">
+      <point x="0.0" y="0.0" />
+      <point x="1075.0" y="152.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.Ticket.TicketOperationException" target="roms.Ticket">
+      <point x="0.0" y="0.0" />
+      <point x="291.0" y="295.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.Ticket.Status" target="roms.Ticket">
+      <point x="0.0" y="0.0" />
+      <point x="135.0" y="295.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.OrderItem" target="roms.MenuItem">
+      <point x="0.0" y="0.0" />
+      <point x="589.5" y="295.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.TicketPrinter" target="roms.AbstractOutputDevice">
+      <point x="0.0" y="0.0" />
+      <point x="1911.0" y="83.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.AbstractOutputDevice" target="roms.AbstractDevice">
+      <point x="0.0" y="0.0" />
+      <point x="1479.5" y="14.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.OfficeKVM" target="roms.AbstractIODevice">
+      <point x="0.0" y="0.0" />
+      <point x="797.5" y="152.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.Clock" target="roms.AbstractInputDevice">
+      <point x="0.0" y="0.0" />
+      <point x="1334.0" y="83.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.AbstractInputDevice" target="roms.AbstractDevice">
+      <point x="0.0" y="0.0" />
+      <point x="220.5" y="14.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.PassLight" target="roms.AbstractOutputDevice">
+      <point x="0.0" y="0.0" />
+      <point x="1781.0" y="83.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.BankClient" target="roms.AbstractIODevice">
+      <point x="0.0" y="0.0" />
+      <point x="668.5" y="152.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.AbstractIODevice" target="roms.AbstractInputDevice">
+      <point x="0.0" y="0.0" />
+      <point x="522.5" y="83.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.CardReader" target="roms.AbstractInputDevice">
+      <point x="0.0" y="0.0" />
+      <point x="1216.5" y="83.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.TableDisplay" target="roms.AbstractIODevice">
+      <point x="0.0" y="0.0" />
+      <point x="931.0" y="152.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="roms.ReceiptPrinter" target="roms.AbstractOutputDevice">
+      <point x="0.0" y="0.0" />
+      <point x="1647.0" y="83.5" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="494.0" y="357.5" />
   <SelectedNodes />
   <Categories>
-    <Category>Fields</Category>
-    <Category>Constructors</Category>
-    <Category>Methods</Category>
-    <Category>Properties</Category>
     <Category>Inner Classes</Category>
   </Categories>
   <SCOPE>Project Files</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
 </Diagram>
 

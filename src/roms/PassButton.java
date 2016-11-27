@@ -57,10 +57,11 @@ public class PassButton extends AbstractInputDevice {
     /*
      * FIELD(S) AND SETTER(S) FOR MESSAGE DESTINATIONS
      */
-    
-    private SystemCore systemCore;
-    public void setSystemCore(SystemCore s) { 
-        systemCore = s;
+
+    private KitchenController kitchenController;
+
+    public void setKitchenController(KitchenController kitchenController) {
+        this.kitchenController = kitchenController;
     }
 
     /*
@@ -68,10 +69,9 @@ public class PassButton extends AbstractInputDevice {
      */
     public void press() {
         logger.fine(getInstanceName());
-        // TO BE COMPLETED
-        systemCore.cancelReadyUp();
+        kitchenController.cancelReadyUp();
     }
-    
+
     /*
      * Put all class modifications above.
      **********************************************************************

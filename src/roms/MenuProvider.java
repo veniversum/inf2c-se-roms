@@ -3,7 +3,7 @@ package roms;
 /**
  * Menu provider class. Provides extensibility and follows open/closed principle.
  *
- * Current implementation has a static default menu, but can be extended to support
+ * Current implementation has only a default menu, but can be extended to support
  * menu based on day of week or period of day (breakfast, lunch, dinner).
  */
 public class MenuProvider {

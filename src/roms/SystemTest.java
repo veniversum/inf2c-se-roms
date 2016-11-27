@@ -194,6 +194,7 @@ public class SystemTest extends TestBasis {
         KitchenController kitchenController = new KitchenController(systemCore);
         kitchenController.addKitchenDisplay(display);
         kitchenController.setTicketPrinter(printer);
+        kitchenController.setPassLight(light);
         systemCore.setKitchenController(kitchenController);
         // ## Initialize tableTicketCoordinator
         TableTicketCoordinator tableTicketCoordinator = new TableTicketCoordinator();
@@ -204,12 +205,11 @@ public class SystemTest extends TestBasis {
         systemCore.setMenuProvider(menuProvider);
 
         systemCore.setBankClient(bankClient);
-        systemCore.setPassLight(light);
         // END INITIALIZE SYSTEM CORE
 
         tableTicketCoordinator.setSystemCore(systemCore);
 
-        button.setSystemCore(systemCore);
+        button.setKitchenController(kitchenController);
         officeKVM.setSystemCore(systemCore);
         Clock.setSystemCore(systemCore);
 
