@@ -85,7 +85,7 @@ public class TableTicketCoordinator {
      * @return Ticket instance associated with table if exists
      */
     public Ticket getTicket(String tableId) {
-        logger.fine(tableId);
+        logger.finer(tableId);
         return tableTicketMap.get(tableId);
     }
 

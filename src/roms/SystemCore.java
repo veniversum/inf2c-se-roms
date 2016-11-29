@@ -21,47 +21,47 @@ public class SystemCore {
     }
 
     public void setKitchenController(KitchenController kitchenController) {
-        logger.fine("");
+        logger.finer("");
         this.kitchenController = kitchenController;
     }
 
     public Rack getRack() {
-        logger.fine("");
+        logger.finer("");
         return rack;
     }
 
     public void setRack(Rack rack) {
-        logger.fine("");
+        logger.finer("");
         this.rack = rack;
     }
 
     public TableTicketCoordinator getTableTicketCoordinator() {
-        logger.fine("");
+        logger.finer("");
         return tableTicketCoordinator;
     }
 
     public void setTableTicketCoordinator(TableTicketCoordinator tableTicketCoordinator) {
-        logger.fine("");
+        logger.finer("");
         this.tableTicketCoordinator = tableTicketCoordinator;
     }
 
     public MenuProvider getMenuProvider() {
-        logger.fine("");
+        logger.finer("");
         return menuProvider;
     }
 
     public void setMenuProvider(MenuProvider menuProvider) {
-        logger.fine("");
+        logger.finer("");
         this.menuProvider = menuProvider;
     }
 
     public BankClient getBankClient() {
-        logger.fine("");
+        logger.finer("");
         return bankClient;
     }
 
     public void setBankClient(BankClient bankClient) {
-        logger.fine("");
+        logger.finer("");
         this.bankClient = bankClient;
     }
 }

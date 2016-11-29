@@ -32,22 +32,22 @@ public class Ticket {
      * @return Ticket number
      */
     public int getTicketNumber() {
-        logger.fine("");
+        logger.finer(String.valueOf(ticketNumber));
         return ticketNumber;
     }
 
     public void setTicketNumber(int ticketNumber) {
-        logger.fine(String.valueOf(ticketNumber));
+        logger.finer(String.valueOf(ticketNumber));
         this.ticketNumber = ticketNumber;
     }
 
     public Date getSubmittedTime() {
-        logger.fine("");
+        logger.finer("");
         return submittedTime;
     }
 
     public void setSubmittedTime(Date submittedTime) {
-        logger.fine("");
+        logger.finer("");
         this.submittedTime = submittedTime;
     }
 
@@ -106,7 +106,7 @@ public class Ticket {
     }
 
     public String getTableID() {
-        logger.fine(tableID);
+        logger.finer(tableID);
         return tableID;
     }
 
@@ -156,7 +156,7 @@ public class Ticket {
     public static class TicketOperationException extends RuntimeException {
         public TicketOperationException(String message) {
             super(message);
-            logger.fine(getStackTrace()[0].getClassName() + "::" + getStackTrace()[0].getMethodName()
+            logger.warning(getStackTrace()[0].getClassName() + "::" + getStackTrace()[0].getMethodName()
                     + " raised exception with message : " + message);
         }
     }

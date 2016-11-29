@@ -21,6 +21,17 @@ public class SystemTest extends TestBasis {
      */
 
     /*
+        "Include all your tests as JUnit test methods in the SystemTest class. Feel free to add
+        extra auxiliary methods that handle repeatedly needed sequences of input and output events;
+        avoid cut and pasting the same sequences multiple times."
+
+        Tests are self contained, and setting up of system state is done separately for each test
+        case. There may be portions of duplicated code for initializing the Menu for example.
+
+        This is done so that tests will be independent of each other, and the expected output of other
+        tests will not need to be changed should a single menu item be changed for another test.
+     */
+    /*
         BEGIN PHASE 1 TESTS
      */
 
@@ -53,6 +64,16 @@ public class SystemTest extends TestBasis {
                 "    D2,        Wine,  3.25, \n" +
                 "    M1,        Fish,  7.95, \n" +
                 "    M2,   Veg Chili,  6.70");
+        // overriding existing menu item
+        input("1 12:00, OfficeKVM, okvm, addToMenu, D2, Wine, 4.25");
+        input("1 19:15, OfficeKVM, okvm, showMenu");
+        expect("1 19:15, OfficeKVM, okvm, viewMenu, tuples, 3, \n" +
+                "    ID, Description, Price, \n" +
+                "    D1,  Soft Drink,  1.50, \n" +
+                "    D2,        Wine,  4.25, \n" +
+                "    M1,        Fish,  7.95, \n" +
+                "    M2,   Veg Chili,  6.70");
+
         runAndCheck();
     }
 
@@ -205,6 +226,9 @@ public class SystemTest extends TestBasis {
         runAndCheck();
     }
 
+    /**
+     * Tests both cases when quantity = 1 and quantity > 1.
+     */
     @Test
     public void removeFromTicketTest() {
         logger.info(makeBanner("removeFromTicketTest"));
@@ -220,13 +244,21 @@ public class SystemTest extends TestBasis {
         input("1 20:01, TableDisplay, td1, addMenuItem, D2");
         input("1 20:01, TableDisplay, td1, addMenuItem, M1");
         input("1 20:01, TableDisplay, td1, addMenuItem, D1");
-        input("1 20:01, TableDisplay, td1, removeMenuItem, D2");
         input("1 20:01, TableDisplay, td1, addMenuItem, D1");
         input("1 20:01, TableDisplay, td1, addMenuItem, D1");
         input("1 20:01, TableDisplay, td1, showTicket");
         expect("1 20:01, TableDisplay, td1, viewTicket, tuples, 3,\n" +
                 "    ID, Description, Count,\n" +
                 "    D1,  Soft Drink,     3,\n" +
+                "    D2,  Wine,     1,\n" +
+                "    M1,        Fish,     2,\n" +
+                "    M2,   Veg Chili,     1");
+        input("1 20:01, TableDisplay, td1, removeMenuItem, D2");
+        input("1 20:01, TableDisplay, td1, removeMenuItem, D1");
+        input("1 20:01, TableDisplay, td1, showTicket");
+        expect("1 20:01, TableDisplay, td1, viewTicket, tuples, 3,\n" +
+                "    ID, Description, Count,\n" +
+                "    D1,  Soft Drink,     2,\n" +
                 "    M1,        Fish,     2,\n" +
                 "    M2,   Veg Chili,     1");
         runAndCheck();
@@ -357,7 +389,7 @@ public class SystemTest extends TestBasis {
      * Check indicating item ready works.
      * <p>
      * Check that on first item in ticket, a ticket is printed,
-     * on last item, ready up light is switched on,
+     * on last item, ready up light is switched on and ticket is removed from rack,
      * and kitchen display shows correct fulfilled quantity when refreshed.
      */
     @Test
@@ -379,6 +411,7 @@ public class SystemTest extends TestBasis {
                 "    Time, Ticket#, MenuID, Description, #Ordered, #Ready,\n" +
                 "      1,       1,     D1,  Soft Drink,        3,      0,\n");
         input("1 20:23, KitchenDisplay, kd, itemReady, 1, D1");
+        //print ticket on first ready
         expect("1 20:23, TicketPrinter, tp, takeTicket, tuples, 3,\n" +
                 "    Table:,       Tab-1,     _,\n" +
                 "        ID, Description, Count,\n" +
@@ -389,7 +422,12 @@ public class SystemTest extends TestBasis {
                 "      1,       1,     D1,  Soft Drink,        3,      1,\n");
         input("1 20:23, KitchenDisplay, kd, itemReady, 1, D1");
         input("1 20:24, KitchenDisplay, kd, itemReady, 1, D1");
+        //switch on ready up light on last ready
         expect("1 20:24, PassLight, pl, viewSwitchedOn");
+        input("1 20:21, Clock, c, tick");
+        //ticket should be removed when all items ready
+        expect("1 20:21, KitchenDisplay, kd, viewRack, tuples, 6,\n" +
+                "    Time, Ticket#, MenuID, Description, #Ordered, #Ready");
         runAndCheck();
 
 
@@ -414,13 +452,6 @@ public class SystemTest extends TestBasis {
         input("1 12:00, OfficeKVM, okvm, addToMenu, D1, Soft Drink, 1.50");
         input("1 12:00, OfficeKVM, okvm, addToMenu, D2, Wine, 3.25");
         input("1 20:00, TableDisplay, td1, startOrder");
-        input("1 20:00, TableDisplay, td1, showMenu");
-        expect("1 20:00, TableDisplay, td1, viewMenu, tuples, 3,\n" +
-                "    ID, Description, Price,\n" +
-                "    D1,  Soft Drink,  1.50,\n" +
-                "    D2,        Wine,  3.25,\n" +
-                "    M1,        Fish,  7.95,\n" +
-                "    M2,   Veg Chili,  6.70");
         input("1 20:01, TableDisplay, td1, addMenuItem, M1");
         input("1 20:01, TableDisplay, td1, addMenuItem, M2");
         input("1 20:01, TableDisplay, td1, addMenuItem, D2");
@@ -430,12 +461,6 @@ public class SystemTest extends TestBasis {
         input("1 20:01, TableDisplay, td1, addMenuItem, D1");
         input("1 20:01, TableDisplay, td1, removeMenuItem, D2");
         input("1 20:01, TableDisplay, td1, removeMenuItem, D2");
-        input("1 20:01, TableDisplay, td1, showTicket");
-        expect("1 20:01, TableDisplay, td1, viewTicket, tuples, 3,\n" +
-                "    ID, Description, Count,\n" +
-                "    D1,  Soft Drink,     3,\n" +
-                "    M1,        Fish,     2,\n" +
-                "    M2,   Veg Chili,     1");
         input("1 20:02, TableDisplay, td1, submitOrder");
         input("1 20:10, TableDisplay, td2, startOrder");
         input("1 20:11, TableDisplay, td2, addMenuItem, M1");
@@ -480,17 +505,8 @@ public class SystemTest extends TestBasis {
         input("1 20:24, Clock, c, tick");
         expect("1 20:24, KitchenDisplay, kd, viewRack, tuples, 6,\n" +
                 "    Time, Ticket#, MenuID, Description, #Ordered, #Ready,\n" +
-                "      22,       1,     D1,  Soft Drink,        3,      3,\n" +
-                "      22,       1,     M1,        Fish,        2,      2,\n" +
-                "      22,       1,     M2,   Veg Chili,        1,      1,\n" +
                 "      12,       2,     D2,        Wine,        1,      0,\n" +
                 "      12,       2,     M1,        Fish,        2,      1");
-        input("1 21:30, TableDisplay, td1, payBill");
-        expect("1 21:30, TableDisplay, td1, approveBill, Total:, 27.10");
-        input("1 21:32, CardReader, cr1, acceptCardDetails, XYZ1234");
-        expect("1 21:32, BankClient, bc, makePayment, XYZ1234, 27.10");
-        input("1 21:33, BankClient, bc, acceptAuthorisationCode, ABCD");
-        expect("1 21:33, ReceiptPrinter, rp1, takeReceipt, Total:, 27.10, AuthCode:, ABCD");
         runAndCheck();
     }
     /*

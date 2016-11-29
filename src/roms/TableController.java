@@ -11,7 +11,7 @@ public class TableController {
 
     public TableController(SystemCore systemCore, String tableId) {
         this(tableId);
-        logger.fine("init");
+        logger.finer("init");
         this.systemCore = systemCore;
     }
 
@@ -20,14 +20,17 @@ public class TableController {
     }
 
     public void setCardReader(CardReader cardReader) {
+        logger.finer("");
         this.cardReader = cardReader;
     }
 
     public void setReceiptPrinter(ReceiptPrinter receiptPrinter) {
+        logger.finer("");
         this.receiptPrinter = receiptPrinter;
     }
 
     public void setTableDisplay(TableDisplay tableDisplay) {
+        logger.finer("");
         this.tableDisplay = tableDisplay;
         tableDisplay.setTableController(this);
     }
