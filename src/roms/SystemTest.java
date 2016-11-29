@@ -36,7 +36,7 @@ public class SystemTest extends TestBasis {
      */
 
     /**
-     * Checks show menu capability of office KVM.
+     * Checks basic show menu capability of office KVM.
      */
     @Test
     public void showOfficeMenuTest() {
@@ -138,8 +138,8 @@ public class SystemTest extends TestBasis {
      */
     @Test(expected = AssertionError.class)
     public void testAssertionError() {
-        Menu menu = new Menu();
-        menu.removeMenuItem("invalid");
+        input("1 12:00, OfficeKVM, okvm, removeFromMenu, invalidID");
+        runAndCheck();
     }
 
     /*
