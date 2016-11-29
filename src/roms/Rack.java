@@ -29,6 +29,12 @@ public class Rack {
         ticketQueue.put(ticket.getTicketNumber(), ticket);
     }
 
+    public void removeOrder(int ticketNumber) {
+        logger.fine("removing order #" + ticketNumber);
+        ticketQueue.remove(ticketNumber);
+    }
+
+
     public Ticket getTicketByNumber(int number) {
         logger.fine("retrieving ticket #" + number);
         return ticketQueue.get(number);

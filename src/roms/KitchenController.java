@@ -22,7 +22,7 @@ public class KitchenController {
      * @param systemCore system core
      */
     public KitchenController(SystemCore systemCore) {
-        logger.fine("init");
+        logger.finer("init");
         this.systemCore = systemCore;
     }
 
@@ -32,7 +32,7 @@ public class KitchenController {
      * @param ticketPrinter
      */
     public void setTicketPrinter(TicketPrinter ticketPrinter) {
-        logger.fine(ticketPrinter.getInstanceName());
+        logger.finer(ticketPrinter.getInstanceName());
         this.ticketPrinter = ticketPrinter;
     }
 
@@ -42,7 +42,7 @@ public class KitchenController {
      * @param kitchenDisplay
      */
     public void addKitchenDisplay(KitchenDisplay kitchenDisplay) {
-        logger.fine(kitchenDisplay.getInstanceName());
+        logger.finer(kitchenDisplay.getInstanceName());
         kitchenDisplays.add(kitchenDisplay);
         kitchenDisplay.setKitchenController(this);
     }
@@ -53,7 +53,7 @@ public class KitchenController {
      * @param kitchenDisplay
      */
     public void removeKitchenDisplay(KitchenDisplay kitchenDisplay) {
-        logger.fine(kitchenDisplay.getInstanceName());
+        logger.finer(kitchenDisplay.getInstanceName());
         kitchenDisplays.remove(kitchenDisplay);
         kitchenDisplay.setKitchenController(null);
     }
@@ -64,7 +64,7 @@ public class KitchenController {
      * @param pl
      */
     public void setPassLight(PassLight pl) {
-        logger.fine("");
+        logger.finer("");
         passLight = pl;
     }
 
@@ -110,6 +110,9 @@ public class KitchenController {
         logger.fine("fulfilling item " + menuID + " for ticket #" + ticketNumber);
         Set<Ticket.Status> statuses = ticket.getTicketStatus();
         if (statuses.contains(Ticket.Status.FIRST_ITEM_FULFILLED)) ticketPrinter.printTicket(ticket);
-        if (statuses.contains(Ticket.Status.ALL_FULFILLED)) displayReadyUp();
+        if (statuses.contains(Ticket.Status.ALL_FULFILLED)) {
+            displayReadyUp();
+            systemCore.getRack().removeOrder(ticketNumber);
+        }
     }
 }
