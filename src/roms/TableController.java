@@ -67,9 +67,13 @@ public class TableController {
 
     public void payBill() {
         logger.fine(tableId);
+        Ticket ticket = systemCore.getTableTicketCoordinator().getTicket(tableId);
+        if (ticket == null) throw new Ticket.TicketOperationException("Ticket does not exist for table");
+        if (ticket.isPaid()) throw new Ticket.TicketOperationException("Bill has already been paid for");
         Money payableAmount = systemCore.getTableTicketCoordinator().getTicket(tableId).getPayableAmount();
         tableDisplay.displayBill(payableAmount);
         String authCode = systemCore.getBankClient().authorisePayment(cardReader.waitForCardDetails(), payableAmount);
         receiptPrinter.printReceipt(payableAmount, authCode);
+        ticket.setPaid(true);
     }
 }

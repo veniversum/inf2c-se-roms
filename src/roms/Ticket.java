@@ -14,10 +14,12 @@ public class Ticket {
     private int ticketNumber;
     private Date submittedTime;
     private Status status;
+    private boolean isPaid;
 
     private Ticket() {
         orderItemMap = new TreeMap<>();
         status = Status.NONE_FULFILLED;
+        isPaid = false;
     }
 
     public Ticket(String tableID) {
@@ -149,6 +151,14 @@ public class Ticket {
         return orderItemMap.entrySet()
                 .stream()
                 .map(e -> e.getValue().getPrice().multiply(e.getValue().getQuantity())).reduce(new Money(), Money::add);
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
     }
 
     public enum Status {NONE_FULFILLED, FIRST_ITEM_FULFILLED, ALL_FULFILLED}
